@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "6732911547c00adbb2e64718"
+  },
+  "jugador_1": "Juan Pérez",
+  "jugador_2": "Roger Federer",
+  "fecha": "2024-11-20",
+  "hora": "15:00",
+  "torneo": "Roland Garros",
+  "ubicacion": "París, Francia",
+  "tipo": "Individual"
+},
+{
+  "_id": {
+    "$oid": "6737ca9afe21d1aafba07187"
+  },
+  "jugador_1": "Novak Djokovic",
+  "jugador_2": "Carlos Alcaraz",
+  "fecha": "2024-06-10",
+  "hora": "18:00",
+  "torneo": "Roland Garros",
+  "ubicacion": "París, Francia",
+  "tipo": "Individual"
+},
+{
+  "_id": {
+    "$oid": "6737ca9afe21d1aafba07188"
+  },
+  "jugador_1": "Iga Swiatek",
+  "jugador_2": "Aryna Sabalenka",
+  "fecha": "2024-07-15",
+  "hora": "16:00",
+  "torneo": "Wimbledon",
+  "ubicacion": "Londres, Reino Unido",
+  "tipo": "Individual"
+},
+{
+  "_id": {
+    "$oid": "6737ca9afe21d1aafba07189"
+  },
+  "jugador_1": "Roger Federer",
+  "jugador_2": "Rafael Nadal",
+  "fecha": "2019-07-12",
+  "hora": "15:00",
+  "torneo": "Wimbledon",
+  "ubicacion": "Londres, Reino Unido",
+  "tipo": "Individual"
+},
+{
+  "_id": {
+    "$oid": "6737ca9afe21d1aafba0718a"
+  },
+  "jugador_1": "Serena Williams",
+  "jugador_2": "Maria Sharapova",
+  "fecha": "2018-08-25",
+  "hora": "20:00",
+  "torneo": "US Open",
+  "ubicacion": "Nueva York, Estados Unidos",
+  "tipo": "Individual"
+}]

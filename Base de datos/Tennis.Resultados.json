@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "6732916547c00adbb2e6471e"
+  },
+  "sets": [
+    "6-3",
+    "6-4",
+    "3-6"
+  ],
+  "gano": "Juan Pérez",
+  "tiempo": "2 horas 15 minutos"
+},
+{
+  "_id": {
+    "$oid": "6737cae3fe21d1aafba07194"
+  },
+  "sets": [
+    "6-3",
+    "3-6",
+    "6-4"
+  ],
+  "gano": "Novak Djokovic",
+  "tiempo": "2 horas 35 minutos"
+},
+{
+  "_id": {
+    "$oid": "6737cae3fe21d1aafba07195"
+  },
+  "sets": [
+    "6-4",
+    "7-6"
+  ],
+  "gano": "Iga Swiatek",
+  "tiempo": "1 hora 45 minutos"
+},
+{
+  "_id": {
+    "$oid": "6737cae3fe21d1aafba07196"
+  },
+  "sets": [
+    "7-6",
+    "1-6",
+    "6-3"
+  ],
+  "gano": "Roger Federer",
+  "tiempo": "3 horas 10 minutos"
+},
+{
+  "_id": {
+    "$oid": "6737cae3fe21d1aafba07197"
+  },
+  "sets": [
+    "6-2",
+    "6-2"
+  ],
+  "gano": "Serena Williams",
+  "tiempo": "1 hora 10 minutos"
+}]

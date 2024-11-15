@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "6732918147c00adbb2e64721"
+  },
+  "jugador": "Juan Pérez",
+  "torneo": "Roland Garros",
+  "partidos_jugados": 5,
+  "ganados": 4,
+  "perdidos": 1,
+  "sets_a_favor": 12,
+  "sets_en_contra": 5,
+  "puntos": 2000
+},
+{
+  "_id": {
+    "$oid": "6737caf7fe21d1aafba0719a"
+  },
+  "jugador": "Novak Djokovic",
+  "torneo": "Roland Garros",
+  "partidos_jugados": 7,
+  "ganados": 7,
+  "perdidos": 0,
+  "sets_a_favor": 21,
+  "sets_en_contra": 4,
+  "puntos": 2000
+},
+{
+  "_id": {
+    "$oid": "6737caf7fe21d1aafba0719b"
+  },
+  "jugador": "Iga Swiatek",
+  "torneo": "Wimbledon",
+  "partidos_jugados": 6,
+  "ganados": 6,
+  "perdidos": 0,
+  "sets_a_favor": 12,
+  "sets_en_contra": 2,
+  "puntos": 2000
+},
+{
+  "_id": {
+    "$oid": "6737caf7fe21d1aafba0719c"
+  },
+  "jugador": "Roger Federer",
+  "torneo": "Wimbledon",
+  "partidos_jugados": 7,
+  "ganados": 6,
+  "perdidos": 1,
+  "sets_a_favor": 18,
+  "sets_en_contra": 5,
+  "puntos": 1200
+},
+{
+  "_id": {
+    "$oid": "6737caf7fe21d1aafba0719d"
+  },
+  "jugador": "Serena Williams",
+  "torneo": "US Open",
+  "partidos_jugados": 7,
+  "ganados": 7,
+  "perdidos": 0,
+  "sets_a_favor": 14,
+  "sets_en_contra": 2,
+  "puntos": 2000
+}]
