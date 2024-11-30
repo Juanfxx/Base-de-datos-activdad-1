@@ -1,0 +1,108 @@
+# Codigo para crear la replicacion de la base de datos 
+
+## Iniciar nodos del Replica Set
+
+mongod --replSet RP --dbpath="C:\datos\db1\nod22" --port 27018
+mongod --replSet RP --dbpath="C:\datos\db1\nod33" --port 27019
+mongod --replSet RP --dbpath="C:\datos\db1\nod44" --port 27020
+
+# Acceder al servidor
+mongosh --host localhost --port 27018
+
+# Configurar el Replica Set
+rs.initiate()
+rs.add("localhost:27019")
+rs.add("localhost:27020")
+
+#Codigo de los casos de pruebas 
+/**
+ * MongoDB Replica Set Test Cases
+ * Base de datos: Tennis
+ * Nodos del Replica Set:
+ * - localhost:27017
+ * - localhost:27018
+ * - localhost:27019
+ * - localhost:27020
+ */
+// Conexión al Primary (puedes ajustar según tu nodo Primary actual)
+connPrimary = new Mongo("localhost:27017");
+dbPrimary = connPrimary.getDB("Tennis");
+
+// Caso 1: Verificación de replicación de datos
+print("Caso 1: Verificación de replicación de datos");
+// Insertamos un documento en el Primary
+dbPrimary.players.insertOne({ _id: 1, name: "Roger Federer", ranking: 1, country: "Switzerland" });
+
+// Verificamos en los Secondary
+const secondaries = ["localhost:27018", "localhost:27019", "localhost:27020"];
+secondaries.forEach(host => {
+    const connSecondary = new Mongo(host);
+    const dbSecondary = connSecondary.getDB("Tennis");
+    dbSecondary.getMongo().setSlaveOk(); // Permite lecturas en nodos secundarios
+    const result = dbSecondary.players.findOne({ _id: 1 });
+    print(`Verificación en ${host}:`, result);
+});
+
+// Caso 2: Failover automático
+print("\nCaso 2: Failover automático");
+// Identificar el Primary actual
+const replicaStatus = dbPrimary.adminCommand({ replSetGetStatus: 1 });
+const primaryNode = replicaStatus.members.find(member => member.stateStr === "PRIMARY").name;
+print("Nodo Primary actual:", primaryNode);
+
+// Simular falla del Primary (requiere permisos administrativos)
+if (primaryNode.includes("localhost:27017")) {
+    print("Apagando Primary (localhost:27017)...");
+    dbPrimary.shutdownServer();
+    sleep(10000); // Esperamos 10 segundos para la promoción
+    const newPrimaryStatus = connPrimary.getDB("admin").runCommand({ replSetGetStatus: 1 });
+    const newPrimary = newPrimaryStatus.members.find(member => member.stateStr === "PRIMARY").name;
+    print("Nuevo Primary:", newPrimary);
+}
+
+// Caso 3: Disponibilidad continua bajo carga
+print("\nCaso 3: Disponibilidad continua bajo carga");
+// Insertamos múltiples documentos en el Primary
+print("Insertando 1000 documentos en la colección players...");
+for (let i = 2; i <= 1001; i++) {
+    dbPrimary.players.insertOne({ _id: i, name: `Player_${i}`, ranking: i, country: `Country_${i}` });
+}
+
+// Consultamos el conteo de documentos en los Secondary
+secondaries.forEach(host => {
+    const connSecondary = new Mongo(host);
+    const dbSecondary = connSecondary.getDB("Tennis");
+    dbSecondary.getMongo().setSlaveOk(); // Permite lecturas en nodos secundarios
+    const count = dbSecondary.players.countDocuments();
+    print(`Conteo en ${host}:`, count);
+});
+
+// Caso 4: Consistencia eventual
+print("\nCaso 4: Consistencia eventual");
+// Insertamos un documento grande en el Primary
+print("Insertando un documento grande...");
+dbPrimary.matches.insertOne({
+    _id: 5000,
+    matchDetails: Array(1000000).fill("details"),
+    timestamp: new Date()
+});
+
+// Verificamos la replicación en los Secondary
+secondaries.forEach(host => {
+    const connSecondary = new Mongo(host);
+    const dbSecondary = connSecondary.getDB("Tennis");
+    dbSecondary.getMongo().setSlaveOk();
+    let result;
+    let attempts = 0;
+    while (!result && attempts < 5) { // Intentamos hasta 5 veces con retrasos
+        result = dbSecondary.matches.findOne({ _id: 5000 });
+        if (!result) {
+            print(`Documento no encontrado en ${host}, intentando nuevamente...`);
+            sleep(2000); // Esperar 2 segundos antes de reintentar
+        }
+        attempts++;
+    }
+    print(`Resultado en ${host}:`, result);
+});
+
+print("\nPruebas completadas.");
