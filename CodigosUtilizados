@@ -2,9 +2,9 @@
 
 ## Iniciar nodos del Replica Set
 
-mongod --replSet RP --dbpath="C:\datos\db1\nod22" --port 27018
-mongod --replSet RP --dbpath="C:\datos\db1\nod33" --port 27019
-mongod --replSet RP --dbpath="C:\datos\db1\nod44" --port 27020
+mongod --replSet RP --dbpath="C:\datos\db1\base1" --port 27018
+mongod --replSet RP --dbpath="C:\datos\db1\base2" --port 27019
+mongod --replSet RP --dbpath="C:\datos\db1\base3" --port 27020
 
 # Acceder al servidor
 mongosh --host localhost --port 27018
