@@ -1,0 +1,25 @@
+Paso 1 
+mongod --configsvr --replSet configReplSet --dbpath "C:\data\config" --port 27019 --fork --logpath "C:\data\config\config.log"
+Paso 2
+mongod --shardsvr --dbpath "C:\data\shard1" --port 27021 --fork --logpath "C:\data\shard1\shard1.log"
+mongod --shardsvr --dbpath "C:\data\shard2" --port 27022 --fork --logpath "C:\data\shard2\shard2.log"
+Paso 3
+mongos --configdb configReplSet/localhost:27019 --port 27017 --fork --logpath "C:\data\mongos.log"
+Paso 4
+rs.initiate({
+  _id: "configReplSet",
+  configsvr: true,
+  members: [
+    { _id: 0, host: "localhost:27019" }
+  ]
+})
+Paso 5 
+sh.addShard("localhost:27021")
+sh.addShard("localhost:27022")
+Paso 6
+sh.enableSharding("Tennis")
+Paso 7 
+sh.shardCollection("Tennis.matches", { event_id: "hashed" })
+Paso 8
+sh.status()
+
