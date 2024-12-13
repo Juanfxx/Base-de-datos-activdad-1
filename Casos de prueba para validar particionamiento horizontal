@@ -1,0 +1,30 @@
+// Casos de prueba para validar el particionamiento horizontal en MongoDB
+
+// Conexión a la base de datos
+use Tennis;
+
+// CP001: Validar la distribución uniforme de datos
+console.log("CP001: Insertando documentos en la colección 'matches'...");
+for (let i = 1; i <= 1000; i++) {
+    db.matches.insertOne({ event_id: i, match_date: new Date(), score: Math.floor(Math.random() * 100) });
+}
+console.log("Consulta del estado del sharding:");
+sh.status();
+
+// CP002: Verificar el balanceo automático
+console.log("CP002: Agregando un nuevo shard al clúster...");
+sh.addShard("localhost:27021");
+console.log("Consulta del estado del balanceador:");
+sh.status();
+
+// CP003: Probar consultas en el clúster shard
+console.log("CP003: Ejecutando una consulta filtrando por 'event_id'...");
+const explainResult = db.matches.find({ event_id: 500 }).explain("executionStats");
+printjson(explainResult);
+
+// CP004: Validar la recuperación tras fallo de un shard
+console.log("CP004: Validar tolerancia a fallos. Detén manualmente un nodo shard (fuera de este script).");
+console.log("Consultando datos en el clúster tras detener un nodo...");
+const queryResult = db.matches.find({ event_id: 1 });
+printjson(queryResult);
+console.log("Reinicia el nodo detenido manualmente para restaurar su operación.");
